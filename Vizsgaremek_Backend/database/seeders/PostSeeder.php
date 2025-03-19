@@ -13,14 +13,6 @@ class PostSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
-        for($i=0; $i<10; $i++){
-            DB::table('posts')->insert({
-                'title' => Str::random(100),
-                'content' => Str::random(100),
-            })
 
-        }
-    }
+    
 }
