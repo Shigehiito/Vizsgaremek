@@ -12,6 +12,17 @@ class UserController extends Controller
     public function index()
     {
         //
+        if($request->search){
+            $post = DB::table('posts')
+            ->where('title', 'like', '%' . $request->search . '%' )
+            ->paginate(3);
+
+        }
+        else{
+            $post = DB::table('posts')->paginate(3);
+        }
+
+        return view('post_index', ['post' => $post]);
     }
 
     /**
@@ -36,6 +47,8 @@ class UserController extends Controller
     public function show(string $id)
     {
         //
+        $post = DB::table('users')->where('id', $id)->first();
+        return view('post_show' , ['post' => $post]);
     }
 
     /**
