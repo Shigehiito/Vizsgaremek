@@ -14,5 +14,12 @@ class CommentSeeder extends Seeder
     public function run(): void
     {
         //
+            for($i = 0; $i < 10; $i++){
+                DB::table('comments')->insert([
+                    'body' => fake()->text(200),
+                ]);
+            }
+            
+        
     }
 }

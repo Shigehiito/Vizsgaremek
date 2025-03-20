@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::enableForeignKeyConstraints();
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id('id');
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id('id')->primary();
+            $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('title');
-            $table->string('body');
+            $table->string('content');
             $table->timestamps();
         });
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('comments', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('post_id')->references('id')->on('posts');
+
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('comments');
     }
 };
