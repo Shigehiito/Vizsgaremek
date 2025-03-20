@@ -9,20 +9,20 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         if($request->search){
-            $post = DB::table('posts')
-            ->where('title', 'like', '%' . $request->search . '%' )
+            $user = DB::table('users')
+            ->where('name', 'like', '%' . $request->search . '%' )
             ->paginate(3);
 
         }
         else{
-            $post = DB::table('posts')->paginate(3);
+            $user = DB::table('users')->paginate(3);
         }
 
-        return view('post_index', ['post' => $post]);
+        return view('user_index', ['user' => $user]);
     }
 
     /**
