@@ -17,7 +17,7 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         for($i = 0; $i < 10; $i++){
-            DB::table('post')->insert([
+            DB::table('posts')->insert([
                 'title' => fake()->sentence(6),
                 'body' => fake()->text(200),
             ]);
