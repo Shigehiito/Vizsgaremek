@@ -9,7 +9,7 @@
     <form action="/post" method='GET'>
         <input type="text" name="search" class="form-control" placholder="Search">
     </form>
-
+    <div class="container">
     @php
         $num=1
     @endphp
@@ -24,6 +24,8 @@
         @endphp
         @endforeach
     </table>
-    {{ $post->links() }}
+    {{$post->links()}}
+    </div>
+
 </body>
 </html>

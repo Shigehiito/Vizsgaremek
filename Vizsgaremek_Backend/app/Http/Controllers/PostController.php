@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        
         if($request->search){
             $post = DB::table('posts')
             ->where('title', 'like', '%' . $request->search . '%' )
@@ -22,7 +23,8 @@ class PostController extends Controller
             $post = DB::table('posts')->paginate(3);
         }
 
-        return view('post.index', ['post' => $post]);
+        return view('post_index', ['post' => $post]);
+       
     }
 
     /**
@@ -31,7 +33,7 @@ class PostController extends Controller
     public function create()
     {
         //
-        return view('post.create');
+        return view('post_create');
     }
 
     /**
@@ -58,8 +60,8 @@ class PostController extends Controller
     public function show(string $id)
     {
         //
-        $post = DB::table('post')->where('id', $id)->first();
-        return view('post.show' , ['post' => $post]);
+        $post = DB::table('posts')->where('id', $id)->first();
+        return view('post_show' , ['post' => $post]);
     }
 
     /**
@@ -70,7 +72,7 @@ class PostController extends Controller
         //
         $post = DB::table('posts')->where('id', $id)->first();
 
-        return view('post.edit' , ['post' => $post]);
+        return view('post_edit' , ['post' => $post]);
     }
 
     /**
