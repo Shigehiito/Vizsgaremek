@@ -13,7 +13,7 @@
 
 
             <label for="PWLoginFormControl">Password</label>
-            <input type="text" name="password" id="NameLoginFormControl" class="form-control">
+            <input type="password" name="password" id="PWLoginFormControl" class="form-control">
             <br>
             @error('password')
             <p>{{$message}}</p>

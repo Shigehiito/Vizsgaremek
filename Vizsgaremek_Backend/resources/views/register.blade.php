@@ -5,7 +5,7 @@
         <form action="/register" method="POST">
             @csrf
 
-            <label for="NameInputFormControl">Name</label>
+            <label for="NameInputFormControl" class="form-label">Name</label>
             <input type="text" name="name" id="NameInputFormControl" class="form-control">
             <br>
             @error('name')
@@ -13,7 +13,7 @@
             @enderror
 
 
-            <label for="EmailInputFormControl">Email</label>
+            <label for="EmailInputFormControl" class="form-label">Email</label>
             <input type="text" name="email" id="EmailInputFormControl" class="form-control">
             <br>
             @error('email')
@@ -21,8 +21,8 @@
             @enderror
 
 
-            <label for="PWInputFormControl">Password</label>
-            <input type="text" name="password" id="NameInputFormControl" class="form-control">
+            <label for="PWInputFormControl" class="form-label">Password</label>
+            <input type="text" name="password" id="PWInputFormControl" class="form-control">
             <br>
             @error('password')
             <p>{{$message}}</p>

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -34,15 +36,15 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function login(Request $request){
+    public function login(Request $request): RedirectResponse{
         $credentials = $request->validate([
-            'email' => ['required','email'],
+            'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
         if(Auth::attempt($credentials)){
-        $request->session()->regenerate();
-        return redirect('/');
+            $request->session()->regenerate();
+            return redirect('post');
         }
 
         return back()->withErrors([
@@ -54,6 +56,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('post');
     }
 }
