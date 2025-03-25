@@ -24,5 +24,4 @@ class PostSeeder extends Seeder
         }
         
     }
-    
 }
