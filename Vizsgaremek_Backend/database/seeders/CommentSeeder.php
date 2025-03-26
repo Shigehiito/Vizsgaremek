@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 
 class CommentSeeder extends Seeder
@@ -16,10 +17,11 @@ class CommentSeeder extends Seeder
         //
             for($i = 0; $i < 10; $i++){
                 DB::table('comments')->insert([
-                    'body' => fake()->text(200),
+                    "user_id" => rand(5,9),
+                    'content' => fake()->text(200),
                 ]);
             }
-            
-        
+
+
     }
 }

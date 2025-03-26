@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -24,11 +23,11 @@ class AuthController extends Controller
         DB::table('users')->insert([
             'name'=> $request->name,
             'email'=> $request->email,
-            'password'=> Hash::make($request->Password),
+            'password'=> Hash::make($request->password),
             'created_at' => now(),
         ]);
 
-        return redirect('/login');
+        return redirect('login');
     }
 
 
@@ -36,17 +35,15 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function login(Request $request): RedirectResponse{
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
+    public function login(Request $request){
+        $validated  = $request->validate([
+            'email' => ['required','email'],
             'password' => ['required'],
         ]);
-
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($validated)){
             $request->session()->regenerate();
             return redirect('post');
-        }
-
+        };
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');

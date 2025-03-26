@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 
 class PostSeeder extends Seeder
@@ -20,8 +21,9 @@ class PostSeeder extends Seeder
             DB::table('posts')->insert([
                 'title' => fake()->sentence(6),
                 'body' => fake()->text(200),
+                'created_at' => now(),
             ]);
         }
-        
+
     }
 }
