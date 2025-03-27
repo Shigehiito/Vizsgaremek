@@ -15,12 +15,16 @@ class CommentSeeder extends Seeder
     public function run(): void
     {
         //
-            for($i = 0; $i < 10; $i++){
-                DB::table('comments')->insert([
-                    "user_id" => rand(5,9),
-                    'content' => fake()->text(200),
-                ]);
-            }
+        $post_id = DB::table('posts')->pluck('id')->toArray();
+        $user_id = DB::table('users')->pluck('id')->toArray();
+        for($i = 0; $i < 10; $i++){
+            DB::table('comments')->insert([
+                'user_id' => $user_id[array_rand($user_id)],
+                'post_id' => $post_id[array_rand($post_id)],
+                'content' => fake()->text(50),
+                'created_at' => now(),
+            ]);
+        }
 
 
     }

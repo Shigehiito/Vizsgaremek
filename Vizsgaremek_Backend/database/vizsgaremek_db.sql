@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 20. 12:58
+-- Létrehozás ideje: 2025. Már 27. 09:10
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -36,26 +36,21 @@ CREATE TABLE `comments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Tábla szerkezet ehhez a táblához `migrations`
+-- A tábla adatainak kiíratása `comments`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- A tábla adatainak kiíratása `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '0001_01_01_000000_create_users_table', 1),
-(2, '2025_03_19_080452_create_posts_table', 1),
-(3, '2025_03_20_093528_create_comment_table', 1);
+INSERT INTO `comments` (`id`, `post_id`, `user_id`, `content`, `created_at`, `updated_at`) VALUES
+(1, 7, 21, 'Illum qui ut qui ea molestiae.', '2025-03-27 07:08:05', NULL),
+(2, 7, 3, 'Voluptate et ipsum est facere.', '2025-03-27 07:08:05', NULL),
+(3, 7, 10, 'Porro corrupti eum veritatis quibusdam dolorem.', '2025-03-27 07:08:05', NULL),
+(4, 9, 8, 'Quaerat sed dolor impedit quaerat.', '2025-03-27 07:08:05', NULL),
+(5, 9, 19, 'Culpa quis vel adipisci.', '2025-03-27 07:08:05', NULL),
+(6, 6, 5, 'Inventore at ipsam non est accusamus amet.', '2025-03-27 07:08:05', NULL),
+(7, 1, 7, 'Vero ad consequatur eum aut similique unde sunt.', '2025-03-27 07:08:05', NULL),
+(8, 6, 12, 'Totam repellat at et eos ut cumque laboriosam.', '2025-03-27 07:08:05', NULL),
+(9, 1, 21, 'Aut culpa numquam quasi dolor atque doloremque.', '2025-03-27 07:08:05', NULL),
+(10, 4, 19, 'Eius qui pariatur omnis distinctio voluptas.', '2025-03-27 07:08:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -71,6 +66,22 @@ CREATE TABLE `posts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- A tábla adatainak kiíratása `posts`
+--
+
+INSERT INTO `posts` (`id`, `user_id`, `title`, `body`, `created_at`, `updated_at`) VALUES
+(1, 9, 'Architecto expedita nostrum dolorem voluptatem sed.', 'Sed esse eum facere harum consequatur non.', '2025-03-27 07:07:50', NULL),
+(2, 5, 'Corrupti numquam provident aspernatur nesciunt aut eos.', 'Illum rem et qui corrupti est modi.', '2025-03-27 07:07:50', NULL),
+(3, 17, 'Fugiat vel eum debitis sint.', 'Omnis sint quo et molestiae non omnis est.', '2025-03-27 07:07:50', NULL),
+(4, 9, 'Voluptas accusantium vel rerum ut enim.', 'Alias pariatur magnam debitis quidem.', '2025-03-27 07:07:50', NULL),
+(5, 3, 'Incidunt laudantium eius voluptatem deserunt.', 'Quae velit at molestiae et ducimus suscipit quos.', '2025-03-27 07:07:50', NULL),
+(6, 7, 'Qui quia dolor dolorum temporibus.', 'Soluta sunt quisquam voluptas quis repudiandae.', '2025-03-27 07:07:50', NULL),
+(7, 10, 'Quisquam at ab aut quo et saepe et.', 'Placeat sit ullam ab laudantium vel esse.', '2025-03-27 07:07:50', NULL),
+(8, 21, 'Et minima nobis modi est placeat.', 'Deleniti incidunt nemo veritatis quae.', '2025-03-27 07:07:50', NULL),
+(9, 13, 'Aut aut voluptas ipsa aliquid veniam omnis expedita voluptatibus.', 'Delectus quidem et labore rerum reiciendis.', '2025-03-27 07:07:50', NULL),
+(10, 9, 'Iure eos quo aspernatur quas aut.', 'Excepturi ea esse asperiores delectus recusandae.', '2025-03-27 07:07:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -94,27 +105,25 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Test User', 'test@example.com', '2025-03-20 09:57:00', '$2y$12$4AbMu3kPpl2AYL6AscgcSO6V39OLt55JXhxTMUZv9dYB1peXPaTLG', 'YZvucZJhyl', '2025-03-20 09:57:00', '2025-03-20 09:57:00'),
-(3, 'Blanditiis enim dolore autem consequatur explicabo.', 'Placeat et dolor nemo ea illo sint atque. Qui et mollitia dolorem repellat harum. Autem ut est voluptatibus quidem. Ut eum optio accusantium non et.', '2025-03-20 10:14:31', '$2y$12$w88se3X1.NuvdCu5wybA.OOevjiWUXdBsCnLk13svqsqWW9amjM7G', 'naJXcnTV6A', '2025-03-20 10:14:32', '2025-03-20 10:14:32'),
-(4, 'Quam deleniti illum possimus incidunt aut explicabo quibusdam.', 'Dolorem qui voluptatibus aut aut. Atque vel numquam temporibus assumenda doloribus repellendus. Ducimus doloribus et voluptate animi. Sunt qui quia quisquam sint temporibus nisi nam.', '2025-03-20 10:14:32', '$2y$12$sRpYPQDDSn51IHlhbthZk.j3esRzkjoRyd.o/DKtC.XSp4m8k5ktG', 'qoZP13RbLK', '2025-03-20 10:14:32', '2025-03-20 10:14:32'),
-(5, 'Ex in cumque molestiae ducimus dignissimos dolorum officia ipsa.', 'Et hic omnis sint. Rerum voluptatem quidem quos quaerat natus explicabo. Maiores debitis dolor voluptates cum quos id. Voluptatem eveniet laudantium ratione nihil error omnis.', '2025-03-20 10:14:32', '$2y$12$kVatrIzTWCnkM28whGOFW.ioU4MsONuCzth21PE8G4l7I/32B7dbi', 'gAGhMk9YSA', '2025-03-20 10:14:32', '2025-03-20 10:14:32'),
-(6, 'Officia placeat voluptatibus voluptatem.', 'Dolore voluptatem aspernatur dolores commodi. Placeat laboriosam sit nemo repudiandae qui itaque non. Atque ad et unde debitis hic.', '2025-03-20 10:14:32', '$2y$12$2o5CwtBY2Z7OvD7kAjQ9puCLO7PhvcxLJeh7KpgQy3KZNAFnX/Upu', 'ozODLdyFqC', '2025-03-20 10:14:32', '2025-03-20 10:14:32'),
-(7, 'Atque quia aut voluptatem error velit.', 'Dicta dolores iusto nobis sunt. Voluptate et rem quis in sed quia consectetur. Voluptas est dolorem voluptatem a expedita. Voluptas consequatur officia modi voluptates fuga sequi.', '2025-03-20 10:14:32', '$2y$12$U22osdc4FuFpplThtYArP.WB/PpolcjJoBXM6PhWUNafpQ7hw0LAK', 'ABIXuPN1FW', '2025-03-20 10:14:33', '2025-03-20 10:14:33'),
-(8, 'Cum perspiciatis vel necessitatibus fugit placeat eum.', 'Aut vel itaque perferendis quia soluta voluptatem et. Unde ullam quia voluptatum ipsum.', '2025-03-20 10:14:33', '$2y$12$7W6FX527zGqbZ.LQisNVG.xJ2nMF22K/PAyENLdPi3XQQe0hbaOQi', 'I9DFe6XPPQ', '2025-03-20 10:14:33', '2025-03-20 10:14:33'),
-(9, 'Molestiae recusandae architecto quis accusantium eligendi.', 'Excepturi aut ut omnis blanditiis id. Consequatur delectus pariatur a rerum natus. Ex sed aspernatur et ducimus aut unde dolor.', '2025-03-20 10:14:33', '$2y$12$MLJ6sSR1bCsuS1cvvkiuAeTbAmTopHjS.ittWSG3qqUQhREvSAA4a', 'mnXCeC21Ix', '2025-03-20 10:14:33', '2025-03-20 10:14:33'),
-(10, 'Est et ut animi.', 'Est mollitia qui nemo deserunt asperiores at. Tenetur perspiciatis excepturi aliquid ut excepturi fuga. Dolore numquam accusamus iure ducimus eum. Est officia vel tempora quod et et et qui.', '2025-03-20 10:14:33', '$2y$12$6T9qAcKuUkgXUzlz4GWU7eD82gVF6icflHU8LQR6ujKkU2iHfrCxW', 'bgPVyETpur', '2025-03-20 10:14:33', '2025-03-20 10:14:33'),
-(11, 'Velit et aut voluptatem excepturi praesentium.', 'Facere ut iste aperiam ullam rerum laborum. Esse atque omnis nam voluptate magnam. Consectetur reprehenderit tempore cumque corrupti.', '2025-03-20 10:14:33', '$2y$12$VW1vN.1vCyWN2S5TG6RA7uPT1bHLXy/6bt9XXQDpnFHb8gk2fGM9K', 'ZZNPCmonyf', '2025-03-20 10:14:33', '2025-03-20 10:14:33'),
-(12, 'Dolores sit minus ut veritatis.', 'Et illum nam velit quo voluptatem at a rem. Rerum autem est aperiam. Impedit voluptatem excepturi est eaque. Aut suscipit sed et exercitationem quo eum. Debitis labore non nihil incidunt.', '2025-03-20 10:14:33', '$2y$12$uNHarEvsFZkGFZXKjmVVKutcXfQwezJFFh46RqfyQle1JKDqfvhIy', 'F1tzfqmSMJ', '2025-03-20 10:14:33', '2025-03-20 10:14:33'),
-(13, 'Omnis velit soluta officia eius sint beatae.', 'Aliquam et perspiciatis quis sunt ut cumque est recusandae. Repellat inventore tempore quod quis voluptatem. Aut soluta omnis est.', '2025-03-20 10:15:35', '$2y$12$blsoS9eBgfb5quLOHZOHBuFXd3bVjtth78fJgAN6VKUEpV8pBw7te', 'YybRvWT6IE', '2025-03-20 10:15:35', '2025-03-20 10:15:35'),
-(14, 'Porro et eius iusto dolorum cumque.', 'Accusantium tenetur quia aspernatur quae qui. Similique minima quia quod architecto quis. Vitae repudiandae mollitia ex eum in qui. Aut nihil iure iure.', '2025-03-20 10:15:35', '$2y$12$CAh6ejEecbyJkmIkEY03LOsGPjW8ztZRW/IgbGonpT.vYUkvMVmYu', 'CynKiKUrLP', '2025-03-20 10:15:35', '2025-03-20 10:15:35'),
-(15, 'Voluptatem aut amet voluptatem quos voluptatem doloribus maxime.', 'Cum autem quia assumenda sit ut. Pariatur consequatur eum veritatis atque reiciendis. Nesciunt aut exercitationem laboriosam. Est et et minima rem illo nobis.', '2025-03-20 10:15:35', '$2y$12$307niowHtsyeteQWN6fMOubx9zgfOo1j2MQkzvg/OdYiI2zJG5mdm', '3hZoqvbXmK', '2025-03-20 10:15:36', '2025-03-20 10:15:36'),
-(16, 'Necessitatibus fugiat repudiandae fugiat dolore numquam.', 'Quae sint cumque voluptatibus. Molestias quis officiis nesciunt iusto. Velit dolorem voluptas repellendus rerum eius dolorum.', '2025-03-20 10:15:36', '$2y$12$synp8lzCLdV.HDXFo.8GOOmqNVBMqdcAc7R1O.HrUPoGmSlngG/d2', 'YagsyGyisx', '2025-03-20 10:15:36', '2025-03-20 10:15:36'),
-(17, 'Et laboriosam qui maiores ea vel aperiam consequatur.', 'Nemo non aut fugiat quisquam. Sed ab quos necessitatibus consequatur ratione molestiae praesentium. Quo a voluptatem qui autem assumenda. Unde qui aliquam consequuntur nihil recusandae amet qui.', '2025-03-20 10:15:36', '$2y$12$Z/rCA9jj5oddDbAvNQt7l.39exlziSs10I2sgJfju8RnGPpxlHo.m', 'd0szynfjhY', '2025-03-20 10:15:36', '2025-03-20 10:15:36'),
-(18, 'Quaerat facilis quas est quam.', 'Voluptatem error iste reiciendis aperiam. Ea occaecati quia iure amet placeat sunt necessitatibus at. Laudantium non dolore harum corrupti occaecati perferendis.', '2025-03-20 10:15:36', '$2y$12$NGXxBd.skxkpK2y88ecm1eB18OCMjRh9cv6eKjXDZjbNZbeyBqExq', 'zSUUQQtij3', '2025-03-20 10:15:36', '2025-03-20 10:15:36'),
-(19, 'Voluptatibus natus dignissimos id.', 'Maxime autem odio magni. Sit rerum eos voluptate eligendi sapiente. Adipisci quos qui cumque consequatur sequi sunt. Aspernatur voluptatem provident earum quod.', '2025-03-20 10:15:36', '$2y$12$ga3sNCqvotar4GX.XbjF4e3JAuPT5/ggtdOZjRkOIexSewF.dQa3W', 'ZRbZ7QToI5', '2025-03-20 10:15:36', '2025-03-20 10:15:36'),
-(20, 'Sed aut minima sit blanditiis corrupti assumenda assumenda.', 'Aut molestiae cumque et. Sed odio maiores possimus molestias. Molestiae quod cupiditate cum eum. Porro laborum rerum pariatur rerum.', '2025-03-20 10:15:36', '$2y$12$55zxCqOjBsUubLo3DNRfReYmBzn4CmwaEqYrAmdflXmAk8KstKawu', 'YyNBT365Al', '2025-03-20 10:15:37', '2025-03-20 10:15:37'),
-(21, 'Esse sunt quia provident.', 'Aperiam qui quos fugiat. Minus est corrupti omnis culpa saepe.', '2025-03-20 10:15:37', '$2y$12$1ETEDdzSA7kkeV5wAzvT1eHeuUE92FFI6EEeHfDQOg1blm2roCqJi', 'l0VaM5p4M2', '2025-03-20 10:15:37', '2025-03-20 10:15:37'),
-(22, 'Iusto quod placeat laboriosam et voluptatem.', 'Doloribus corporis amet beatae rerum dolor qui. Nihil et commodi aliquid illo consequuntur. Nihil exercitationem dicta facilis provident aut recusandae nihil.', '2025-03-20 10:15:37', '$2y$12$Pn/AKjSiyTovzHvvfw06U.a0lBRMnRI3fy8DO6r9T1TDGSe2moJoy', 'hVQIQQiSBZ', '2025-03-20 10:15:37', '2025-03-20 10:15:37');
+(3, 'Esse.', 'lillian.luettgen@gmail.com', NULL, '$2y$12$OtWzGz04t3LRssF7Gts0hOyPRPXuVQMYhd808LrhgXKEQOTwEsIOK', NULL, '2025-03-27 07:05:36', NULL),
+(4, 'Illo.', 'vmarquardt@jaskolski.biz', NULL, '$2y$12$vUbPlF32/w529JcuBwp7felLhe75Qgzrurew9qfSjhf0bz6GTtdbG', NULL, '2025-03-27 07:07:30', NULL),
+(5, 'Autem.', 'sally81@yahoo.com', NULL, '$2y$12$Gj564AHguAOX8Tjk9DXL6uhi/p6fAqMIHhLAP0NRMr.04vvTQeFqy', NULL, '2025-03-27 07:07:30', NULL),
+(6, 'Ut.', 'dspencer@goldner.net', NULL, '$2y$12$mmf1xDzHWs/RVRTspEzWFefFj3iYmrptyZAnQxlgm6IHikXv2t1MK', NULL, '2025-03-27 07:07:31', NULL),
+(7, 'Iure.', 'cruickshank.rashawn@mraz.com', NULL, '$2y$12$Gs17DRxYyRHl/sk/x/ReXeC19HbHJLl1s2YkSDIIBtKOXEB4vFeLu', NULL, '2025-03-27 07:07:31', NULL),
+(8, 'Et.', 'yolanda32@dibbert.biz', NULL, '$2y$12$uDSTq4usEwro1TMN8HhePeI4qdd/EmN9vfQrKju15aeHTWRbJIGUa', NULL, '2025-03-27 07:07:31', NULL),
+(9, 'Quis.', 'qmueller@hermann.com', NULL, '$2y$12$BisDnm4h5Rk5DnpQI4QNt.pDg693/eNw1RLDStNbA.X/CfeY3d84e', NULL, '2025-03-27 07:07:31', NULL),
+(10, 'Qui.', 'lstoltenberg@hotmail.com', NULL, '$2y$12$LxVNsrg1KV5bdSv40AH7rex8zf9tkChwXyMpsgRiBHWR2D3OtESSW', NULL, '2025-03-27 07:07:31', NULL),
+(11, 'Atque.', 'gkoepp@crooks.org', NULL, '$2y$12$qObem/Pfzmk0fBbYBm8MwuLbStI8d5Nm0n23Zm.dnpOYfA9glvvcu', NULL, '2025-03-27 07:07:31', NULL),
+(12, 'Qui.', 'dessie11@stokes.com', NULL, '$2y$12$KuijtTw7wv1ed0Bu6wn8D.Gd3hLB4sSrvxAatBXasqcL3y3d2JzaW', NULL, '2025-03-27 07:07:32', NULL),
+(13, 'Totam.', 'millie.beer@hotmail.com', NULL, '$2y$12$cagOdyBaRXUNS6RinhvTV.q94m2P3CbuD6ECixhhq4YYnvsUrj6ZG', NULL, '2025-03-27 07:07:32', NULL),
+(14, 'Autem.', 'alverta78@kutch.biz', NULL, '$2y$12$6aYbmgtYmUNEuJObDblSyeZ5Lc1v8bohipeZlONbVSeudSCAihV5W', NULL, '2025-03-27 07:07:32', NULL),
+(15, 'Iure.', 'njakubowski@yahoo.com', NULL, '$2y$12$7I1VtXrAfU32D.Pc0uYXHeA.k9VcokI0sPkH4RnmzXz/pSDxnKWwG', NULL, '2025-03-27 07:07:32', NULL),
+(16, 'Quia.', 'russel.janelle@yahoo.com', NULL, '$2y$12$PqcB4Nb.Yo04.Nn.k2BTMeXzyYTvNRNTuedUOEb7vi.bYujMy0cuC', NULL, '2025-03-27 07:07:32', NULL),
+(17, 'Quis.', 'ydurgan@hotmail.com', NULL, '$2y$12$3VDsGmeVuLEPhtPDIQqGNO1fpNl7N63dVp0jBV1ufF9bCQpn.lbOi', NULL, '2025-03-27 07:07:33', NULL),
+(18, 'Iure.', 'deion09@yahoo.com', NULL, '$2y$12$XMEW3USEBR/gqsJyhaWKVewsewupounE1xS1UOZirolDif/pQVPyC', NULL, '2025-03-27 07:07:33', NULL),
+(19, 'Rerum.', 'glesch@hagenes.com', NULL, '$2y$12$W9datHrTajP2.ZyZLex71uAuLYVO9B.6uB88u7bF8PlyJ6CWLAQOe', NULL, '2025-03-27 07:07:33', NULL),
+(20, 'Quis.', 'jwalsh@hickle.biz', NULL, '$2y$12$2g3ldqHcqIZFdIzoPdbaX.LDGCZb1ZLRXBhrNUVpbHwsZP6ch5S9i', NULL, '2025-03-27 07:07:33', NULL),
+(21, 'Aut.', 'walter.raina@koss.com', NULL, '$2y$12$mlJgBI.CJ7rQCQcupn3dQeZ8iMgt3NBczE8oBo2hoG6bGFpVGD3k6', NULL, '2025-03-27 07:07:33', NULL);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -127,12 +136,6 @@ ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `comments_user_id_foreign` (`user_id`),
   ADD KEY `comments_post_id_foreign` (`post_id`);
-
---
--- A tábla indexei `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- A tábla indexei `posts`
@@ -156,25 +159,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT a táblához `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT a táblához `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT a táblához `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Megkötések a kiírt táblákhoz

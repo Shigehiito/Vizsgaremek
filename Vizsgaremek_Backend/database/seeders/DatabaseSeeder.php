@@ -16,13 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 0; $i < 5; $i++){
+
+
+        for($i = 2; $i < 20; $i++){
             DB::table('users')->insert([
                 'name' => fake()->text(6),
                 'email' => fake()->email(20),
                 'password' => Hash::make('name'),
                 'created_at' => now(),
             ]);
+
+
+
+
         }
 
 

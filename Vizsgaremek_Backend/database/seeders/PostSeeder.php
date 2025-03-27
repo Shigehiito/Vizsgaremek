@@ -17,10 +17,12 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
+        $user_id = DB::table('users')->pluck('id')->toArray();
         for($i = 0; $i < 10; $i++){
             DB::table('posts')->insert([
+                'user_id' => $user_id[array_rand($user_id)],
                 'title' => fake()->sentence(6),
-                'body' => fake()->text(200),
+                'body' => fake()->text(50),
                 'created_at' => now(),
             ]);
         }
