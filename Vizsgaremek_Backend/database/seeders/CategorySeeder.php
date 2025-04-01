@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
 
 class CategorySeeder extends Seeder
 {
@@ -15,7 +17,7 @@ class CategorySeeder extends Seeder
         $categories = ["Elden Ring","Grand Theft Auto V","Warframe","League Of Legends","Counter-Strike 2","Minecraft","Path of Exile 2","Pokemon Legends Z-A","The First Berserker: Khazan","Assassin's Creed Shadows"];
         for($i = 0; $i < count($categories); $i++){
             DB::table('category')->insert([
-                'role_name' => $categories[$i],
+                'category_name' => $categories[$i],
                 
             ]);
         }
