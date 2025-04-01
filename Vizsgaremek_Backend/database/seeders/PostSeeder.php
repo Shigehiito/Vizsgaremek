@@ -23,7 +23,6 @@ class PostSeeder extends Seeder
                 'user_id' => $user_id[array_rand($user_id)],
                 'title' => fake()->sentence(6),
                 'body' => fake()->text(50),
-                'created_at' => now(),
             ]);
         }
 
