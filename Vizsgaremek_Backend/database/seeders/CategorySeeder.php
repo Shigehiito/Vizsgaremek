@@ -12,10 +12,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ["Elden Ring","Grand Theft Auto V","Warframe","League Of Legends","Counter-Strike 2","Minecraft","Path of Exile 2","Pokemon Legends Z-A","The First Berserker: Khazan","Assassin's Creed Shadows"]
-        for($i = 0; $i < $categories.count; $i++){
+        $categories = ["Elden Ring","Grand Theft Auto V","Warframe","League Of Legends","Counter-Strike 2","Minecraft","Path of Exile 2","Pokemon Legends Z-A","The First Berserker: Khazan","Assassin's Creed Shadows"];
+        for($i = 0; $i < count($categories); $i++){
             DB::table('category')->insert([
-                'role_name' => fake()->text(6),
+                'role_name' => $categories[$i],
                 
             ]);
         }
