@@ -19,11 +19,10 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('title');
             $table->string('body');
-            $table->timestamps();
         });
         Schema::table('posts', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('category_id')->references('category_id')->on('category');
+            $table->foreign('category_id')->references('id')->on('category');
         });
     }
 
