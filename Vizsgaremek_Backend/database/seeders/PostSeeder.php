@@ -18,9 +18,11 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $user_id = DB::table('users')->pluck('id')->toArray();
+        $category_id = DB::table('category')->pluck('id')->toArray();
         for($i = 0; $i < 10; $i++){
             DB::table('posts')->insert([
                 'user_id' => $user_id[array_rand($user_id)],
+                'category_id' => $user_id[array_rand($category_id)],
                 'title' => fake()->sentence(6),
                 'body' => fake()->text(50),
             ]);
