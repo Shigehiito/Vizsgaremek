@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-
-        for($i = 2; $i < 20; $i++){
+        $role_id = DB::table('role')->pluck('id')->toArray();
+        for($i = 0; $i < 20; $i++){
             DB::table('users')->insert([
                 'name' => fake()->text(6),
+                'role_id' => $role_id[array_rand($role_id)],
                 'email' => fake()->email(20),
                 'password' => Hash::make('name'),
-                'created_at' => now(),
             ]);
 
 
