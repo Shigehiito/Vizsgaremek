@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         for($i = 0; $i < 20; $i++){
             DB::table('users')->insert([
                 'name' => fake()->text(6),
-                'role_id' => $role_id[array_rand($role_id)],
+                'role_id' => $role_id[0],
                 'email' => fake()->email(20),
                 'password' => Hash::make('name'),
             ]);
