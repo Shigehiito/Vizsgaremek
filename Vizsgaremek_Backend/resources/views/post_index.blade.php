@@ -26,7 +26,7 @@
             <tr>
                 <th>{{$item -> title}}</th>
                 <td>{{$item -> body}}</td>
-                <td><button class="btn btn-primary"><a href="post/${id}/edit">Edit</a></button></td>
+                <td><button class="btn btn-primary"><a href='post/${{$item->id}}/edit'>Edit</a></button></td>
             </tr>
                 @php
                     $num++

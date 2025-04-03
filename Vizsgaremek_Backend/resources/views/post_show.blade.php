@@ -8,14 +8,14 @@
 <body>
     <div class="container">
         <h1>Post</h1>
-        <p>{{$post -> title}}</p>
-        <p>{{$post -> body}}</p>
-        <a href="/post/{{ $post->id }}/edit">Edit</a>
         <form action="/post/{{ $post->id }}" method="POST">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-primary">Delete</button>
         </form>
+        <p>{{$post -> title}}</p>
+        <p>{{$post -> body}}</p>
+        <a href="/post/{{ $post->id }}/edit">Edit</a>
     </div>
 </body>
 </html>
