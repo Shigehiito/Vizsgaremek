@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
@@ -12,7 +13,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         if($request->search){
             $post = DB::table('posts')
             ->where('title', 'like', '%' . $request->search . '%' )
@@ -24,7 +25,7 @@ class PostController extends Controller
         }
 
         return view('post_index', ['post' => $post]);
-       
+
     }
 
     /**
@@ -46,9 +47,12 @@ class PostController extends Controller
             'title' => 'required',
             'body' => 'required',
         ]);
+        $category_id = DB::table('category')->pluck('id')->toArray();
         DB::table('posts')->insert([
             'title' => $request->title,
             'body' => $request->body,
+            'user_id'=>Auth::id(),
+            'category_id' => $category_id[array_rand($category_id)],
         ]);
 
         return redirect('/post');

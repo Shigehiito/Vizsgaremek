@@ -7,6 +7,7 @@
             @csrf
             <button type="submit">Logout</button>
         </form>
+        <button class="btn btn-primary"><a href="/post/create">Create Post</a></button>
     @endauth
 
     @guest
