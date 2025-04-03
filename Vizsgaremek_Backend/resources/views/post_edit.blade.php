@@ -7,18 +7,19 @@
 </head>
 <body>
 <h1>Edit Post</h1>
-<form action='' method='POST'>
+<form action='/post/{id}' method='POST'>
     @csrf
     @method('PUT')
   <div class="mb-6">
+    <input type="hidden" name="id" value=""></input> 
     <label for="postTitle" class="form-label">Title</label>
-    <input type="text" class="form-control" id="postTitle"></input>
+    <input type="text" class="form-control" id="postTitle" value=""></input>
   </div>
   <div class="mb-6">
     <label for="postBody" class="form-label">Body</label>
+    <textarea class="form-control" id="postBody"></textarea>
   </div>
-  <button type="submit" class="btn btn-primary">Create</button>
-  <textarea class="form-control" id="postBody"></textarea>
+  <button type="submit" class="btn btn-primary">Edit</button>
 </form>
 </body>
 </html>
