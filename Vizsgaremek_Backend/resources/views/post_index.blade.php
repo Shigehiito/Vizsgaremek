@@ -1,41 +1,40 @@
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post</title>
-</head>
-<body>
-    <form action="/post" method='GET'>
-        <input type="text" name="search" class="form-control">
-    </form>
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        @auth
-            <form action="/logout" method="post">
-                @csrf
-                <button type="submit">Logout</button>
-            </form>
-        @endauth
+<form action="/post" method='GET'>
+    <input type="text" name="search" class="form-control">
+</form>
+<section class="container-fluid mt-4">
+    @auth
+        <form action="/logout" method="post">
+            @csrf
+            <button type="submit">Logout</button>
+        </form>
+    @endauth
 
-        @guest
-                <li><a href="/register">Registration</a></li>
-                <li><a href="/login">Login</a></li>
-        @endguest
-        @php
-            $num=1
-        @endphp
-        <table>
-            @foreach ($post as $item)
+    @guest
+        <button class="btn btn-primary"><a href="/register">Registration</a></button>
+        <button class="btn btn-primary"><a href="/login">Login</a></button>
+    @endguest
+    @php
+        $num=1
+    @endphp
+    <table class="table table-bordered">
+        <tr>
+            <th>Post Title</th>
+            <td>Post Body</td>
+            <td>Edit Post</td>
+        </tr>
+        @foreach ($post as $item)
             <tr>
-                <td>{{$item -> title}}</td>
+                <th>{{$item -> title}}</th>
                 <td>{{$item -> body}}</td>
+                <td><button class="btn btn-primary"><a href="post/${id}/edit">Edit</a></button></td>
             </tr>
-            @php
-                $num++
-            @endphp
-            @endforeach
-        </table>
-        {{$post->links()}}
-    </div>
-</body>
-</html>
+                @php
+                    $num++
+                @endphp
+                @endforeach
+    </table>
+    {{$post->links('pagination::bootstrap-5')}}
+</section>
+
+
+
