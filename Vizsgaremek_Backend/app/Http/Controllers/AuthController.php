@@ -45,6 +45,15 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect('post');
         };
+
+        $remember_me = $request-> has('remember_me') ? true : false;
+
+        if(Auth::attempt($credentials, $remember_me)){
+            $request->session()->regenerate();
+
+            return redirect('post');
+        }
+
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
