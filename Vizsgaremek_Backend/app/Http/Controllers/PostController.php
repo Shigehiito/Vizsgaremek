@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class PostController extends Controller
 {
@@ -55,7 +56,7 @@ class PostController extends Controller
             'category_id' => $category_id[array_rand($category_id)],
         ]);
 
-        return redirect('/post');
+        return redirect('/post', 201);
     }
 
     /**
