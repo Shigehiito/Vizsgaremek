@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Create Post</h1>
-<form action='/post/create' method="post">
+<form action='/post/create' method="POST">
     @csrf
   <div class="mb-6">
     <label for="postTitle" class="form-label">Title</label>

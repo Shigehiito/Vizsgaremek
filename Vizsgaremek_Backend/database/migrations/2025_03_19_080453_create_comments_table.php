@@ -14,15 +14,10 @@ return new class extends Migration
         Schema::enableForeignKeyConstraints();
         Schema::create('comments', function (Blueprint $table) {
             $table->id('id')->primary();
-            $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('post_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('content');
             $table->timestamps();
-        });
-        Schema::table('comments', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('post_id')->references('id')->on('posts');
-
         });
     }
 

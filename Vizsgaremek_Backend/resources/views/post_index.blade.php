@@ -1,13 +1,13 @@
-<form action="/post" method='GET'>
+<form action="/posts" method='GET'>
     <input type="text" name="search" class="form-control">
 </form>
 <section class="container-fluid mt-4">
     @auth
-        <form action="/logout" method="post">
+        <form action="/logout" method="POST">
             @csrf
             <button type="submit">Logout</button>
         </form>
-        <button class="btn btn-primary"><a href="/post/create">Create Post</a></button>
+        <button class="btn btn-primary"><a href="/posts/create">Create Post</a></button>
     @endauth
 
     @guest

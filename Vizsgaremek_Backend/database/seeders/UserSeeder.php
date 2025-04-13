@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $role_id = DB::table('role')->pluck('id')->toArray();
+        $role_id = DB::table('roles')->pluck('id')->toArray();
         for($i = 0; $i < 20; $i++) {
             DB::table('users')->insert([
                 'name' => fake()->text(6),

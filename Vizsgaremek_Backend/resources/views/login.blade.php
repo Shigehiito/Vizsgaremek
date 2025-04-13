@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Login</h1>
     <div class="mb-3">
-        <form action="/login" method="post">
+        <form action="/login" method="POST">
             @csrf
 
             <label for="EmailLoginFormControl">Email</label>

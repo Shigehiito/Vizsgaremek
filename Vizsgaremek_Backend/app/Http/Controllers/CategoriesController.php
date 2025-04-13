@@ -1,15 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Models\Posts;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StorePostsRequest;
-use App\Http\Requests\UpdatePostsRequest;
+
+use App\Models\Categories;
+use App\Http\Requests\StoreCategoriesRequest;
+use App\Http\Requests\UpdateCategoriesRequest;
 use Illuminate\Support\Facades\Repsonse;
 
-
-class PostsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +17,12 @@ class PostsController extends Controller
         return \Response::json(
             [
                 "data"=> [
-                    ["posts"=> Posts::all()],
+                    ["categories"=> Categories::all()],
                 ],
                 "success"=> true,
                 "message"=> "",
             ], 200
         );
-
     }
 
     /**
@@ -33,40 +30,38 @@ class PostsController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostsRequest $request)
+    public function store(StoreCategoriesRequest $request)
     {
-        $posts = Posts::create($request->all());
-        return response()->json($posts, 201);
+        $categories = Comments::create($request->all());
+        return response()->json($categories, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Posts $posts)
+    public function show(Categories $categories)
     {
-        // $posts = DB::table('posts')->where('id', $id)->first();
-        // return view('post_show' , ['posts' => $posts]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Posts $posts)
+    public function edit(Categories $categories)
     {
-        // $posts = DB::table('posts')->where('id', $id)->first();
-        // return view('post_edit' , ['posts' => $posts]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostsRequest $request, Posts $id)
+    public function update(UpdateCategoriesRequest $request, Categories $id)
     {
         $id->update($request->all());
         return response()->json($id, 201);
@@ -75,7 +70,7 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Posts $id)
+    public function destroy(Categories $id)
     {
         $id->delete();
         return response()->json($id);

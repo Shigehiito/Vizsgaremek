@@ -15,15 +15,13 @@ return new class extends Migration
         Schema::enableForeignKeyConstraints();
         Schema::create('posts', function (Blueprint $table) {
             $table->id('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('category_id');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('category_id')->constrained();
             $table->string('title');
             $table->string('body');
+            $table->timestamps();
         });
-        Schema::table('posts', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('category_id')->references('id')->on('category');
-        });
+     
     }
 
     /**

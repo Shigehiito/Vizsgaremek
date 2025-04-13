@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RoleSeeder extends Seeder
+class RolesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
     {
         $roles = ["user","admin"];
         for($i = 0; $i < count($roles); $i++) {
-            DB::table('role')->insert([
+            DB::table('roles')->insert([
                 "role_name" => $roles[$i],
             ]);
         }

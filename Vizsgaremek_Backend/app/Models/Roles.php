@@ -5,24 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Posts extends Model
+class Roles extends Model
 {
-    /** @use HasFactory<\Database\Factories\PostsFactory> */
+    /** @use HasFactory<\Database\Factories\RolesFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'category_id',
-        'title',
-        'body',
+        'role_name'
     ];
 
     public function users(){
         return $this->belongsTo(User::class);
     }
-    public function comments(){
-        return $this->hasMany(Comments::class);
-    }
-
-
 }
