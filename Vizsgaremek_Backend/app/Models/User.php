@@ -56,7 +56,7 @@ class User extends Authenticatable
         return $this->hasMany(Comments::class);
     }
 
-    public function role(){
+    public function roles(){
         return $this->hasMany(Roles::class);
     }
 }
