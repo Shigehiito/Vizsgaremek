@@ -39,7 +39,7 @@ class RolesController extends Controller
     public function store(StoreRolesRequest $request)
     {
         $roles = Roles::create($request->all());
-        return response()->json($roels, 201);
+        return response()->json($roles, 201);
     }
 
     /**
