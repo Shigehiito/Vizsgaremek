@@ -60,7 +60,7 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUsersRequest $request, Users $id)
+    public function update(UpdateUsersRequest $request, User $id)
     {
         $id->update($request->all());
         return response()->json($id, 201);
@@ -69,7 +69,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Users $id)
+    public function destroy(User $id)
     {
         $id->delete();
         return response()->json($id);
