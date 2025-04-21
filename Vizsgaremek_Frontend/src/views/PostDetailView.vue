@@ -1,7 +1,7 @@
 <script>
 import { http } from '@/utils/http';
 export default{
-    name: 'HomeView',
+    name: 'PostDetailView',
     components:
     "",
     data(){
@@ -11,7 +11,7 @@ export default{
     },
     methods:{
         async getPost(){
-            const resp = await http.get(`/posts`);
+            const resp = await http.get(`/posts/${this.$routes.params.id}`);
             this.posts = await resp.data.data;
         }
     },
