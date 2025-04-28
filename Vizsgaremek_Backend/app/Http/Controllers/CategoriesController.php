@@ -38,7 +38,7 @@ class CategoriesController extends Controller
      */
     public function store(StoreCategoriesRequest $request)
     {
-        $categories = Comments::create($request->all());
+        $categories = Categories::create($request->all());
         return response()->json($categories, 201);
     }
 
