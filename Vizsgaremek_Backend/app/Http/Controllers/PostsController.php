@@ -39,11 +39,29 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostsRequest $request)
+    public function store(Request $request)
     {
-        $posts = Posts::create($request->all());
-        return response()->json($posts, 201);
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        DB::table('posts')->insert([
+            'title' => $request->title,
+            'body' => $request->body,
+            'user_id' => $request->user_id,
+            'category_id' => $request->category_id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        return response()->json([
+            'message' => 'Post created successfully!'
+        ], 201);
     }
+
 
     /**
      * Display the specified resource.

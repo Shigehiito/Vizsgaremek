@@ -1,39 +1,17 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import PostDetailView from '@/views/PostDetailView.vue'
-import CreateView from '@/views/CreateView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import ThreadsView from '../views/ThreadsView.vue';
+import LoginRegisterView from '../views/LoginRegisterView.vue';
+import UserDashboardView from '../views/UserDashboard.vue';
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-      meta:{
-        title: 'Kezdőlap'
-      }
-    },
-    {
-      path: '/posts/:id',
-      name: 'posts',
-      component: PostDetailView,
-      meta:{
-        title: 'Cikk'
-      }
-    },
-    {
-      path: '/posts/create',
-      name: 'create',
-      component: CreateView,
-      meta:{
-        title: 'Létrehozás'
-      }
-    },
-  ],
+const routes = [
+  { path: '/', name: 'Home', component: HomeView },
+  { path: '/threads', name: 'Threads', component: ThreadsView },
+  { path: '/login', component: LoginRegisterView },
+  { path: '/dashboard', component: UserDashboardView }
+]
+
+export default createRouter({
+  history: createWebHistory(),
+  routes
 })
-router.beforeEach((to ,from ,next)=>{
-document.title = to.meta.title;
-next();
-});
-export default router
