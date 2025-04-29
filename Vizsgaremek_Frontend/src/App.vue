@@ -45,11 +45,11 @@ import axios from 'axios';
       <div class="navbar">
         <div class="nav-left">
           <router-link to="/" class="nav-link" exact-active-class="active-link">Home</router-link>
-          <router-link to="/threads" class="nav-link" exact-active-class="active-link">Create Thread</router-link>
-          <router-link to="/dashboard" class="nav-link" exact-active-class="active-link">User Profile</router-link>
-          <router-link to="/comment-manager" class="nav-link" exact-active-class="active-link">Thread Manager</router-link>
+          <router-link to="/create-threads" class="nav-link" exact-active-class="active-link">Create Threads</router-link>
+          <router-link to="/threads" class="nav-link" exact-active-class="active-link">Threads Manager</router-link>
         </div>
         <div class="nav-right">
+          <router-link to="/dashboard" class="nav-link" exact-active-class="active-link">User Profile</router-link>
           <router-link to="/login" class="nav-link" exact-active-class="active-link">Login/Register</router-link>
           <label class="theme-switch">
             <input type="checkbox" v-model="isDark" @change="toggleTheme" />

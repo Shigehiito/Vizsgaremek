@@ -1,153 +1,122 @@
 <template>
-  <div class="thread-container">
-    <div class="create-post">
-      <h2>Create a New Thread</h2>
-      <form @submit.prevent="createPost">
-        <p>Title of your thread:</p>
-        <input v-model="newTitle" type="text" placeholder="Thread Title" required />
-        <textarea v-model="newContent" placeholder="Thread Content" required></textarea>
-
-        <p>- Please select the category below -</p>
-        <select class="dropdown" v-model="selectedCategory" required>
-          <option disabled value="">Category</option>
-          <option v-for="category in categories" :key="category.id" :value="category.id">
-            {{ category.id }} - {{ category.name }}
-          </option>
-        </select>
-
-        <button type="submit">Create Thread</button>
-      </form>
-    </div>
-
-    <div v-for="post in posts" :key="post.id" class="post">
-      <h3>{{ post.title }}</h3>
-      <p>{{ post.body }}</p>
-      <p><strong>Author:</strong> {{ post.user_name || 'Unknown' }}</p>
-
-      <button 
-        v-if="post.user_id == currentUserId"
-        @click="deletePost(post.id)"
-        class="delete-button"
+  <div class="thread-manager">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div 
+        v-for="post in posts" 
+        :key="post.id" 
+        class="post-item" 
+        @click="selectPost(post)"
+        :class="{ active: selectedPost && selectedPost.id === post.id }"
       >
-        Delete
-      </button>
-
-      <div class="comment-section">
-        <h4>Comments:</h4>
-        <input v-model="newComments[post.id]" type="text" placeholder="Write a comment..." />
-        <button @click="submitComment(post.id)">Post Comment</button>
-      </div>
-      <div v-if="post.comments && post.comments.length">
-      <div v-for="comment in post.comments" :key="comment.id" class="comment">
-        <p><strong>{{ comment.user_id || 'Anonymous' }}:</strong> {{ comment.content }}</p>
+        {{ post.title }}
       </div>
     </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+      <div v-if="selectedPost">
+        <h2>{{ selectedPost.title }}</h2>
+        <p>{{ selectedPost.body }}</p>
+
+        <h3>Comments:</h3>
+
+        <div v-if="comments.length === 0">No comments yet!</div>
+        <div v-else>
+          <div 
+            v-for="comment in comments" 
+            :key="comment.id" 
+            class="comment-item"
+          >
+            <div v-if="editingComment === comment.id">
+              <textarea v-model="editContent"></textarea>
+              <button @click="saveEditedComment(comment.id)">Save</button>
+              <button @click="cancelEditing">Cancel</button>
+            </div>
+            <div v-else>
+              <p>{{ comment.content }}</p>
+            </div>
+
+            <small><strong>Author:</strong> {{ comment.user_name || 'Unknown' }}</small>
+
+            <!-- Edit/Delete buttons -->
+            <div v-if="canEditOrDelete(comment)">
+              <button @click="startEditing(comment)">Edit</button>
+              <button @click="deleteComment(comment.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add New Comment -->
+        <div class="add-comment"> 
+          <textarea 
+            v-model="newCommentContent" 
+            placeholder="Write your comment..." 
+            rows="3" 
+            required
+          ></textarea>
+          <button @click="submitNewComment">Submit Comment</button>
+        </div>
+      </div>
+
+      <div v-else>
+        <p>Please select a post to view.</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const posts = ref([])
-const newTitle = ref('')
-const newContent = ref('')
-const selectedCategory = ref('')
-const currentUserId = ref(localStorage.getItem('user_id') || '')
-
-const categories = ref([
-  { id: 1, name: 'Elden Ring' },
-  { id: 2, name: 'Grand Theft Auto V' },
-  { id: 3, name: 'Warframe' },
-  { id: 4, name: 'League Of Legends' },
-  { id: 5, name: 'Counter-Strike 2' },
-  { id: 6, name: 'Minecraft' },
-  { id: 7, name: 'Path of Exile 2' },
-  { id: 8, name: 'Pokemon Legends Z-A' },
-  { id: 9, name: 'The First Berserker: Khazan' },
-  { id: 10, name: "Assassin's Creed Shadows" },
-])
-
-// NEW: hold comments for each post separately
-const newComments = reactive({})
+const comments = ref([])
+const selectedPost = ref(null)
+const newCommentContent = ref('')
+const currentUser = ref(null)
+const editingComment = ref(null)
+const editContent = ref('')
 
 const fetchPosts = async () => {
   try {
     const response = await fetch('http://127.0.0.1:8000/api/posts')
-    const data = await response.json()
-    posts.value = data.data[0].posts.map(post => ({
-      ...post,
-      comments: []
-    }))
-    await fetchCommentsForPosts()
+    const result = await response.json()
+    posts.value = result.data[0].posts || []
   } catch (error) {
     console.error('Error fetching posts:', error)
   }
 }
-const fetchCommentsForPosts = async () => {
+
+const fetchCurrentUser = () => {
+  currentUser.value = {
+    id: localStorage.getItem('user_id'),
+    role_id: localStorage.getItem('user_role_id')
+  }
+}
+
+const fetchCommentsForSelectedPost = async () => {
+  if (!selectedPost.value) return
   try {
     const response = await fetch('http://127.0.0.1:8000/api/comments')
-    const data = await response.json()
-
-    const allComments = data.data[0].comments
-
-    posts.value.forEach(post => {
-      post.comments = allComments.filter(comment => comment.post_id === post.id)
-    })
-  } catch (error) {
-    console.error('Error fetching comments:', error)
+    const result = await response.json()
+    let allComments = Array.isArray(result.data) ? result.data : result.data?.comments || []
+    comments.value = allComments.filter(c => Number(c.post_id) === selectedPost.value.id).map(c => ({
+      ...c,
+      editing: false,
+      user_name: `User #${c.user_id}`
+    }))
+  } catch (err) {
+    console.error('Failed to fetch comments:', err)
   }
 }
 
-const createPost = async () => {
-  if (!currentUserId.value) {
-    alert('You must be logged in to create a thread!')
-    return
-  }
-
-  try {
-    const response = await fetch('http://127.0.0.1:8000/api/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        title: newTitle.value,
-        body: newContent.value,
-        user_id: currentUserId.value,
-        category_id: selectedCategory.value,
-      }),
-    });
-
-    if (response.ok) {
-      alert('Thread created successfully!')
-      newTitle.value = ''
-      newContent.value = ''
-      selectedCategory.value = ''
-      await fetchPosts()
-    } else {
-      const result = await response.json()
-      alert(result.message || 'Failed to create thread.')
-    }
-  } catch (error) {
-    console.error('Network error:', error)
-    alert('Create thread failed. Please try again.')
-  }
+const selectPost = async (post) => {
+  selectedPost.value = post
+  await fetchCommentsForSelectedPost()
 }
 
-const submitComment = async (postId) => {
-  if (!currentUserId.value) {
-    alert('You must be logged in to comment!')
-    return
-  }
-
-  const commentContent = newComments[postId] || ''
-
-  if (!commentContent.trim()) {
-    alert('Comment cannot be empty!')
-    return
-  }
+const submitNewComment = async () => {
+  if (!newCommentContent.value.trim() || !selectedPost.value) return alert('Missing input')
 
   try {
     const response = await fetch('http://127.0.0.1:8000/api/comments', {
@@ -157,96 +126,145 @@ const submitComment = async (postId) => {
         'Accept': 'application/json',
       },
       body: JSON.stringify({
-        post_id: postId,
-        user_id: currentUserId.value,
-        content: commentContent,
-      }),
-    });
-
+        post_id: selectedPost.value.id,
+        user_id: currentUser.value.id,
+        content: newCommentContent.value
+      })
+    })
+    const result = await response.json()
     if (response.ok) {
-      alert('Comment posted successfully!')
-      newComments[postId] = ''
+      alert('Comment submitted')
+      newCommentContent.value = ''
+      await fetchCommentsForSelectedPost()
     } else {
-      const result = await response.json()
-      alert(result.message || 'Failed to post comment')
+      alert(result.message || 'Failed to submit')
     }
-  } catch (error) {
-    console.error('Error posting comment:', error)
-    alert('Failed to post comment')
+  } catch (e) {
+    console.error(e)
+    alert('Submit failed')
   }
 }
 
-onMounted(fetchPosts)
+const canEditOrDelete = (comment) => {
+  return currentUser.value?.id == comment.user_id || currentUser.value?.role_id == '2'
+}
+
+const startEditing = (comment) => {
+  editingComment.value = comment.id
+  editContent.value = comment.content
+}
+
+const cancelEditing = () => {
+  editingComment.value = null
+  editContent.value = ''
+}
+
+const saveEditedComment = async (commentId) => {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/api/comments/${commentId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        content: editContent.value
+      }),
+    })
+
+    if (response.ok) {
+      alert('Comment updated.')
+      editingComment.value = null
+      await fetchCommentsForSelectedPost()
+    } else {
+      alert('Update failed.')
+    }
+  } catch (err) {
+    console.error('Update error:', err)
+    alert('Server error.')
+  }
+}
+
+const deleteComment = async (commentId) => {
+  if (!confirm('Are you sure you want to delete this comment?')) return
+
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/api/comments/${commentId}`, {
+      method: 'DELETE',
+    })
+
+    if (response.ok) {
+      alert('Comment deleted.')
+      await fetchCommentsForSelectedPost()
+    } else {
+      alert('Delete failed.')
+    }
+  } catch (err) {
+    console.error('Delete error:', err)
+    alert('Server error.')
+  }
+}
+
+onMounted(() => {
+  fetchPosts()
+  fetchCurrentUser()
+})
 </script>
 
 <style scoped>
-/* (keeping all your styles exactly) */
-.dropdown {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+.thread-manager {
+  display: flex;
+  height: 100vh;
 }
-
-.thread-container {
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 1rem;
+.sidebar {
+  width: 20%;
+  background-color: #121212;
+  overflow-y: auto;
+  padding: 10px;
+  border-right: 5px solid #ccc;
 }
-.create-post {
-  margin-bottom: 2rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.post-item {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: rgb(109, 108, 108);
+  border: 1px solid #000000;
+  cursor: pointer;
+  border-radius: 10px;
 }
-.create-post form {
-  margin-top: 1rem;
-}
-.create-post input,
-.create-post textarea {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-}
-.create-post button {
-  width: 100%;
-  padding: 0.75rem;
-  border: none;
+.post-item.active {
   background-color: rgb(1, 119, 17);
   color: white;
-  border-radius: 4px;
-  cursor: pointer;
 }
-.post {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
 }
-.delete-button {
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  background-color: #d9534f;
+.comment-item {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgb(109, 108, 108);
+  border-radius: 5px;
+}
+.add-comment {
+  margin-top: 20px;
+}
+.add-comment input,
+.add-comment textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.add-comment button {
+  background-color: rgb(1, 119, 17);
   color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
 }
-.delete-button:hover {
-  background-color: #c9302c;
-}
-.comments {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ccc;
-}
-.comment {
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  background-color: #f1f1f1;
-  border-radius: 4px;
+.add-comment button:hover {
+  background-color: rgb(0, 90, 10);
 }
 </style>
