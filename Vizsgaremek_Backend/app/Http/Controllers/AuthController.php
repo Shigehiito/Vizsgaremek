@@ -79,11 +79,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
 use App\Models\User;
-=======
-use Illuminate\Support\Facades\Response;
->>>>>>> 0c7d2de122e46229bf7a6fb7b6d29a56a0d17d49
 
 class AuthController extends Controller
 {
