@@ -120,33 +120,7 @@ const createPost = async () => {
   border-radius: 4px;
   cursor: pointer;
 }
-.post {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-.delete-button {
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  background-color: #d9534f;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.delete-button:hover {
-  background-color: #c9302c;
-}
-.comments {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ccc;
-}
-.comment {
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  background-color: #f1f1f1;
-  border-radius: 4px;
+button:hover {
+  background-color: rgb(0, 90, 10);
 }
 </style>

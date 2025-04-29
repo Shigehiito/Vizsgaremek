@@ -84,7 +84,7 @@ const login = async () => {
 
       message.value = 'Login successful! Redirecting...'
       setTimeout(() => {
-        router.push('/dashboard')
+        router.push('/profile')
       }, 1000)
     } else {
       message.value = data.message || 'Login failed.'

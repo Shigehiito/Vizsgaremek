@@ -1,6 +1,5 @@
 <template>
   <div class="thread-manager">
-    <!-- Sidebar -->
     <div class="sidebar">
       <div 
         v-for="post in posts" 
@@ -13,7 +12,6 @@
       </div>
     </div>
 
-    <!-- Main content -->
     <div class="main-content">
       <div v-if="selectedPost">
         <h2>{{ selectedPost.title }}</h2>
@@ -38,16 +36,15 @@
             </div>
 
             <small><strong>Author:</strong> {{ comment.user_name || 'Unknown' }}</small>
+            <small class="timestamp">Posted on: {{ formatDate(comment.created_at) }}</small>
 
-            <!-- Edit/Delete buttons -->
-            <div v-if="canEditOrDelete(comment)">
-              <button @click="startEditing(comment)">Edit</button>
-              <button @click="deleteComment(comment.id)">Delete</button>
+            <div class="edit-delete" v-if="canEditOrDelete(comment)">
+              <button class="edit-button" @click="startEditing(comment)">Edit</button>
+              <button class="delete-button" @click="deleteComment(comment.id)">Delete</button>
             </div>
           </div>
         </div>
 
-        <!-- Add New Comment -->
         <div class="add-comment"> 
           <textarea 
             v-model="newCommentContent" 
@@ -205,6 +202,10 @@ const deleteComment = async (commentId) => {
   }
 }
 
+const formatDate = (timestamp) => {
+  return new Date(timestamp).toLocaleString()
+}
+
 onMounted(() => {
   fetchPosts()
   fetchCurrentUser()
@@ -212,21 +213,52 @@ onMounted(() => {
 </script>
 
 <style scoped>
+body.dark .comment-item {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+body:not(.dark) .comment-item {
+  background-color: #f0f0f0;
+  color: black;
+}
+
+.edit-delete, button {
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.edit-button, .delete-button {
+  background-color: rgb(1, 119, 17);
+  margin-right: 5px;
+}
+.edit-button:hover, .delete-button:hover {
+  background-color: rgb(0, 90, 10);
+}
 .thread-manager {
   display: flex;
   height: 100vh;
 }
-.sidebar {
-  width: 20%;
+.sidebar{
+  padding: 1%;
+}
+body.dark .sidebar {
   background-color: #121212;
-  overflow-y: auto;
-  padding: 10px;
-  border-right: 5px solid #ccc;
+  color: white;
+  border-right: 5px solid #ffffff;
+}
+
+body:not(.dark) .sidebar {
+  background-color: #e4e4e4;
+  color: black;
+  border-right: 5px solid #000000;
+
 }
 .post-item {
   padding: 10px;
   margin-bottom: 5px;
-  background-color: rgb(109, 108, 108);
+  background-color: rgb(132, 132, 132);
   border: 1px solid #000000;
   cursor: pointer;
   border-radius: 10px;
@@ -243,8 +275,13 @@ onMounted(() => {
 .comment-item {
   margin-top: 10px;
   padding: 10px;
-  background-color: rgb(109, 108, 108);
   border-radius: 5px;
+}
+.timestamp {
+  display: block;
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 5px;
 }
 .add-comment {
   margin-top: 20px;

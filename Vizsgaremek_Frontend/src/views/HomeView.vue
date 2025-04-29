@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Posts</h1>
+    <h1> - All Posts - </h1>
 
     <div v-if="loading">Loading posts...</div>
     
@@ -49,11 +49,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
+h1 {
+  text-align: center;
+  margin-top: 2rem;
+}
 .post {
   margin-bottom: 1rem;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
+  max-width: 75%;
+  margin: auto;
+  margin-bottom: 0.5rem;
 }
 
 .error {
