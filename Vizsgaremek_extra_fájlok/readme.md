@@ -11,7 +11,8 @@ Csányi Gergő, Kazai Dániel Gábor, Szamosközi Máté
 Vizsgaremek_extra_fájlok/vizsgremek_db.sql
 
 ## Vizsgaremek szoftverdokumencáció helye:
-Vizsgaremek_extra_fájlok/
+Vizsgaremek_extra_fájlok/2025_CsanyiG_KazaiD_SzamoskoziM_CommCord.docx
+Vizsgaremek_extra_fájlok/2025_CsanyiG_KazaiD_SzamoskoziM_CommCord.pdf
 
 ## Adatbázis adatbázis-modell diagramja:
 Vizsgaremek_extra_fájlok/ek_diagram_vizsgaremek.png
