@@ -8,7 +8,7 @@ Csányi Gergő, Kazai Dániel Gábor, Szamosközi Máté
 **Frontend forráskód**: Vizsgaremek_Frontend mappa
 
 ## Adatbázis export (dump) helye:
-Vizsgaremek_extra_fájlok/
+Vizsgaremek_extra_fájlok/vizsgremek_db.sql
 
 ## Vizsgaremek szoftverdokumencáció helye:
 Vizsgaremek_extra_fájlok/
